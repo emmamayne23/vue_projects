@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocumeMy First Vue Js</title>
+    <style>
+        [v-cloak] {display: none}
+
+        .box {
+            background-color: purple;
+            height: 200px;
+            width: 200px;
+        }
+
+        input {
+            margin: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app" v-cloak>
+        <custom-form />
+
+        <hr>
+        <button @click="toggleBox">Toggle Box</button>
+        <div v-if="isVisible" class="box"></div>
+    </div>
+
+
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        let app = Vue.createApp({
+            data: function() {
+                return {
+                    greeting: 'Oh Hi there Vue JS!!!',
+                    isVisible: false
+                }
+            },
+            methods: {
+                toggleBox() {
+                    this.isVisible = !this.isVisible
+                },
+                greet(greeting){
+                    console.log(greeting)
+                }
+            }
+        })
+
+        app.component('custom-form', {
+            template: `
+                <form @submit.prevent="formSubmit">
+                    <h1>{{title}}</h1>
+                    <input type="email" v-model="email" />
+                    <input type="password" v-model="password" />
+                    <button>Log In</button>
+                </form>
+            `,
+            data() {
+                return {
+                    title : 'This is a login form',
+                    email : '',
+                    password : '',
+                }
+            },
+            methods: {
+                formSubmit() {
+                    console.log(this.email, this.password)
+                }
+            }
+
+        })
+
+        app.mount('#app')
+    </script>
+</body>
+</html>
